@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RotarObjeto : MonoBehaviour
 {
@@ -28,6 +29,18 @@ public class RotarObjeto : MonoBehaviour
 
     void Update()
     {
+        // Tecla A ? rotar derecha
+        if (Keyboard.current.aKey.wasPressedThisFrame)
+        {
+            RotarDerecha();
+        }
+
+        // Tecla D ? rotar izquierda
+        if (Keyboard.current.dKey.wasPressedThisFrame)
+        {
+            RotarIzquierda();
+        }
+
         if (rotando)
         {
             transform.rotation = Quaternion.RotateTowards(
