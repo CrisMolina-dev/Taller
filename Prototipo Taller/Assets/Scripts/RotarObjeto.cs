@@ -1,10 +1,13 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class RotarObjeto : MonoBehaviour
 {
     public float anguloRotacion = 90f;
     public float velocidad = 200f;
+
+    public List<GameObject> objetosQueBloquean; 
 
     private bool rotando = false;
     private Quaternion rotacionObjetivo;
@@ -29,13 +32,19 @@ public class RotarObjeto : MonoBehaviour
 
     void Update()
     {
-        // Tecla A ? rotar derecha
+        //bloquear input
+        if (HayObjetoBloqueando())
+        {
+            return;
+        }
+
+        //rotar derecha
         if (Keyboard.current.aKey.wasPressedThisFrame)
         {
             RotarDerecha();
         }
 
-        // Tecla D ? rotar izquierda
+        // izquierda
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
             RotarIzquierda();
@@ -55,5 +64,20 @@ public class RotarObjeto : MonoBehaviour
                 rotando = false;
             }
         }
+    }
+
+    bool HayObjetoBloqueando()
+    {
+        if (objetosQueBloquean == null) return false;
+
+        foreach (GameObject obj in objetosQueBloquean)
+        {
+            if (obj != null && obj.activeSelf)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
