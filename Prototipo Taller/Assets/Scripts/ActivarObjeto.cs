@@ -7,7 +7,7 @@ public class ActivarObjeto : MonoBehaviour
 
     void OnMouseDown()
     {
-        // Click sobre este objeto
+        
         if (objetoAActivar != null)
         {
             objetoAActivar.SetActive(true);
@@ -16,7 +16,7 @@ public class ActivarObjeto : MonoBehaviour
 
     void Update()
     {
-        // Presionar ESC
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (objetoADesactivar != null)

@@ -6,30 +6,46 @@ public class CursorChanger : MonoBehaviour
     public Texture2D cursorNormal;
     public Texture2D cursorHover;
 
+    public Camera[] camaras; // ? puedes asignar varias cámaras
+
     private bool isHovering = false;
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
+        bool detectado = false;
 
-        if (Physics.Raycast(ray, out hit))
+        foreach (Camera cam in camaras)
         {
-            if (hit.collider.gameObject == gameObject)
+            if (cam == null) continue;
+
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                if (!isHovering)
+                if (hit.collider.gameObject == gameObject)
                 {
-                    Cursor.SetCursor(cursorHover, Vector2.zero, CursorMode.Auto);
-                    isHovering = true;
+                    detectado = true;
+                    break;
                 }
-                return;
             }
         }
 
-        if (isHovering)
+        if (detectado)
         {
-            Cursor.SetCursor(cursorNormal, Vector2.zero, CursorMode.Auto);
-            isHovering = false;
+            if (!isHovering)
+            {
+                Cursor.SetCursor(cursorHover, Vector2.zero, CursorMode.Auto);
+                isHovering = true;
+            }
+        }
+        else
+        {
+            if (isHovering)
+            {
+                Cursor.SetCursor(cursorNormal, Vector2.zero, CursorMode.Auto);
+                isHovering = false;
+            }
         }
     }
 }
