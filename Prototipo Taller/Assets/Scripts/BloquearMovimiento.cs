@@ -1,16 +1,24 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BloquearMovimiento : MonoBehaviour
 {
-    public GameObject objetoQueBloquea;
+    [Header("Objetos que bloquean")]
+    public List<GameObject> objetosQueBloquean = new List<GameObject>();
 
     public static bool bloqueoActivo = false;
 
     void Update()
     {
-        if (objetoQueBloquea != null)
+        bloqueoActivo = false;
+
+        foreach (GameObject obj in objetosQueBloquean)
         {
-            bloqueoActivo = objetoQueBloquea.activeSelf;
+            if (obj != null && obj.activeSelf)
+            {
+                bloqueoActivo = true;
+                break;
+            }
         }
     }
 }
